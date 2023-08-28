@@ -1,0 +1,43 @@
+---
+title: "pair programming"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(rvest)  # use to scrape website content
+
+# Check if that data folder exists and creates it if not
+dir.create("data", showWarnings = FALSE)
+
+# Read the webpage code
+webpage <- read_html("https://www.eatthis.com/iconic-desserts-united-states/")
+
+# Extract the desserts listing
+dessert_elements<- html_elements(webpage, "h2")
+dessert_listing <- dessert_elements %>% 
+  html_text2() %>%             # extracting the text associated with this type of elements of the webpage
+  as_tibble() %>%              # make it a data frame
+  rename(dessert = value) %>%  # better name for the column
+  head(.,-3) %>%               # 3 last ones were not desserts 
+  rowid_to_column("rank") %>%  # adding a column using the row number as proxy for the rank
+  write_csv("data/iconic_desserts.csv") # save it as csv
+```
+
+write a code to see if our favorite desserts are in iconic desserts
+
+```{r}
+iconic_desserts <- read_csv("data/iconic_desserts.csv", "iconic_desserts")
+
+favorite_desserts <- read_csv("data/favorite_desserts.csv", "favorite_desserts")
+
+# change to common name
+favorite_desserts <- favorite_desserts %>% 
+  mutate(desserts = X3)
+
+iconic_desserts <- iconic_desserts %>% 
+  mutate(desserts = X2)
+
+for (i in )
+```
