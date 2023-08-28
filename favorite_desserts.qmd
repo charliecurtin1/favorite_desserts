@@ -39,5 +39,5 @@ favorite_desserts <- favorite_desserts %>%
 iconic_desserts <- iconic_desserts %>% 
   mutate(desserts = X2)
 
-for (i in )
+desserts_share <- anti_join(iconic_desserts, favorite_desserts, by = "desserts")
 ```
